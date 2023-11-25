@@ -62,10 +62,10 @@ end]],
 		selectedtile = roomdata_get(roomx, roomy, atx, aty)]],
 			replace = [[
 		selectedtile = roomdata_get(roomx, roomy, atx, aty)
-	elseif DRAGGING then
+	elseif FUTURE_DRAGGING then
 		future_update_node_dragging()
 		future_finish_node_dragging()
-		DRAGGING = false]],
+		FUTURE_DRAGGING = false]],
 			ignore_error = false,
 			luapattern = false,
 			allowmultiple = false,
@@ -96,14 +96,17 @@ end]],
 	{
 		{
 			find = [[menu = {"#" .. toolnames[5], L.DELETE, L.FLIP, L.MOVEENTITY, L.COPY, L.PROPERTIES}]],
-			replace = [[menu = {"#" .. toolnames[5], L.DELETE, L.FLIP, L.CHANGESPRITE, L.MOVEENTITY, L.COPY, L.PROPERTIES}]],
+			replace =
+			[[menu = {"#" .. toolnames[5], L.DELETE, L.FLIP, L.CHANGESPRITE, L.MOVEENTITY, L.COPY, L.PROPERTIES}]],
 			ignore_error = false,
 			luapattern = false,
 			allowmultiple = false,
 		},
 		{
-			find = [[menu = {(namefound(v) ~= 0 and "" or "#") .. toolnames[12], L.DELETE, L.EDITSCRIPT, inverted_bump_option, L.OTHERSCRIPT, L.FLIP, L.MOVEENTITY, L.COPY, L.PROPERTIES}]],
-			replace = [[menu = {(namefound(v) ~= 0 and "" or "#") .. toolnames[12], L.DELETE, L.EDITSCRIPT, inverted_bump_option, L.OTHERSCRIPT, L.FLIP, L.CHANGESPRITE, L.MOVEENTITY, L.COPY, L.PROPERTIES}]],
+			find =
+			[[menu = {(namefound(v) ~= 0 and "" or "#") .. toolnames[12], L.DELETE, L.EDITSCRIPT, inverted_bump_option, L.OTHERSCRIPT, L.FLIP, L.MOVEENTITY, L.COPY, L.PROPERTIES}]],
+			replace =
+			[[menu = {(namefound(v) ~= 0 and "" or "#") .. toolnames[12], L.DELETE, L.EDITSCRIPT, inverted_bump_option, L.OTHERSCRIPT, L.FLIP, L.CHANGESPRITE, L.MOVEENTITY, L.COPY, L.PROPERTIES}]],
 			ignore_error = false,
 			luapattern = false,
 			allowmultiple = false,
@@ -111,7 +114,7 @@ end]],
 	},
 	["vvvvvvxml"] =
 	{
-		{ 
+		{
 			find = [[-- Level meta data]],
 			replace = [[
 cons("Loading entity colors...")
@@ -248,7 +251,8 @@ table.insert(form, {"activitycolour", labelwidth, row, 47-labelwidth, thisentity
 		},
 		{
 			find = [[local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6", "data"}]],
-			replace = [[local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6", "data", "activitytext", "activitycolour"}]],
+			replace =
+			[[local entitypropkeys = {"x", "y", "t", "p1", "p2", "p3", "p4", "p5", "p6", "data", "activitytext", "activitycolour"}]],
 			ignore_error = false,
 			luapattern = false,
 			allowmultiple = false,
