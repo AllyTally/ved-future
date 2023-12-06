@@ -120,15 +120,11 @@ end]],
 cons("Loading entity colors...")
 if contents then
 	future_entitycolors = contents:match("<EntityColours>(.*)</EntityColours>")
-	future_textboxcolors = contents:match("<TextboxColours>(.*)</TextboxColours>")
 	future_markers = contents:match("<Markers>(.*)</Markers>")
-	future_roomnames = contents:match("<SpecialRoomnames>(.*)</SpecialRoomnames>")
 	future_altstates = contents:match("<altstates>(.*)</altstates>")
 else
 	future_entitycolors = ""
-	future_textboxcolors = ""
 	future_markers = ""
-	future_roomnames = ""
 	future_altstates = ""
 end
 
@@ -141,9 +137,7 @@ end
 			find = [[cons("Saving room metadata...")]],
 			replace = [[
 savethis = savethis:gsub("%$ENTITYCOLORS%$", future_entitycolors or "")
-savethis = savethis:gsub("%$TEXTBOXCOLORS%$", future_textboxcolors or "")
 savethis = savethis:gsub("%$MARKERS%$", future_markers or "")
-savethis = savethis:gsub("%$ROOMNAMES%$", future_roomnames or "")
 savethis = savethis:gsub("%$ALTSTATES%$", future_altstates or "")
 cons("Saving room metadata...")]],
 			ignore_error = false,
@@ -151,10 +145,10 @@ cons("Saving room metadata...")]],
 			allowmultiple = false,
 		},
 		{
-			find = [[vvvvvvxmltemplate = love.filesystem.read("template.vvvvvv")]],
+			find = [[level_template = love.filesystem.read("template.vvvvvv") -- updated 1.11.0]],
 			replace = [[
-vvvvvvxmltemplate = love.filesystem.read("template.vvvvvv")
-vvvvvvxmltemplate = vvvvvvxmltemplate:gsub("</Data>", "    <EntityColours>$ENTITYCOLORS$</EntityColours>\n        <TextboxColours>$TEXTBOXCOLORS$</TextboxColours>\n        <Markers>$MARKERS$</Markers>\n        <SpecialRoomnames>$ROOMNAMES$</SpecialRoomnames>\n        <altstates>$ALTSTATES$</altstates>\n    </Data>")]],
+level_template = love.filesystem.read("template.vvvvvv")
+level_template = level_template:gsub("</Data>", "    <EntityColours>$ENTITYCOLORS$</EntityColours>\n        <Markers>$MARKERS$</Markers>\n        <altstates>$ALTSTATES$</altstates>\n    </Data>")]],
 			ignore_error = false,
 			luapattern = false,
 			allowmultiple = false,
