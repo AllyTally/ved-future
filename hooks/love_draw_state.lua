@@ -36,7 +36,7 @@ if in_astate("future", 0) then
             love.graphics.rectangle("fill", x, y, 32, 32)
         end
         love.graphics.setColor(255,255,255)
-        love.graphics.draw(tilesets["sprites.png"].colored_img, tilesets["sprites.png"].tiles[i], x, y)
+        love.graphics.draw(tilesets["sprites.png"].white_img, tilesets["sprites.png"].tiles[i], x, y)
         if i == current_tile_id then
             love.graphics.setColor(0,255,255,128)
             love.graphics.rectangle("line", x, y, 32, 32)
@@ -53,7 +53,7 @@ if in_astate("future", 0) then
     end
 
 
-    love.graphics.draw(tilesets["sprites.png"].img, tilesets["sprites.png"].tiles[current_tile_id], 640, (love.graphics.getHeight() / 2) - 32, 0, 2, 2)
+    love.graphics.draw(tilesets["sprites.png"].white_img, tilesets["sprites.png"].tiles[current_tile_id], 640, (love.graphics.getHeight() / 2) - 32, 0, 2, 2)
 
     love.graphics.setColor(255, 255, 255)
     ved_print(tile_id, love.graphics.getWidth()-24, love.graphics.getHeight()-8)

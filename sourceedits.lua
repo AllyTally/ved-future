@@ -17,16 +17,6 @@ elseif movingentity > 0 and entitydata[movingentity] ~= nil then]],
 	["func"] =
 	{
 		{
-			find = [[-- Now make everything white so we can color-correct it!]],
-			replace = [[
-				tilesets[file].colored_img = love.graphics.newImage(asimgdata)
-
-				-- Now make everything white so we can color-correct it!]],
-			ignore_error = false,
-			luapattern = false,
-			allowmultiple = false,
-		},
-		{
 			find = [[removeentity(editingroomtext, nil, true)]],
 			replace = [[
 if (input == "" and entitydata[editingroomtext] and entitydata[editingroomtext].t == 18) then
