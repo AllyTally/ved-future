@@ -12,6 +12,41 @@ elseif movingentity > 0 and entitydata[movingentity] ~= nil then]],
 			ignore_error = false,
 			luapattern = false,
 			allowmultiple = false
+		},
+		{
+			find = [[local roomsettings = {platv = levelmetadata_get(roomx, roomy).platv}]],
+			replace = [[local roomsettings = {platv = levelmetadata_get(roomx, roomy).platv, enemyv = levelmetadata_get(roomx, roomy).enemyv}]],
+			ignore_error = false,
+			luapattern = false,
+			allowmultiple = false
+		},
+		{
+			find = [[rbutton({langkeys(L.ENEMYTYPE, {levelmetadata_get(roomx, roomy).enemytype}), "e"}, -2, 164+4, true)]],
+			replace = [[
+				rbutton({langkeys(L.ENEMYTYPE, {levelmetadata_get(roomx, roomy).enemytype}), "e"}, -2, 164+4, true)
+
+				ved_print(L.PLATFORMSPEEDSLIDER, love.graphics.getWidth()-(128-8), love.graphics.getHeight()+24-160+4 + 48)
+				hoverrectangle(128, 128, 128, 128, love.graphics.getWidth()-(128-8)+(6*8) + (64 - font8:getWidth(roomsettings.enemyv))/2 - 4, love.graphics.getHeight()+24-160 + 48, font8:getWidth(roomsettings.enemyv) + 8, 16)
+				int_control(love.graphics.getWidth()-(128-8)+(6*8), love.graphics.getHeight()+24-160 + 48, "enemyv", -math.huge, math.huge, nil, roomsettings, function() return roomsettings.enemyv end, 8*3)
+				local oldenemyv = levelmetadata_get(roomx, roomy).enemyv
+				if roomsettings.enemyv ~= oldenemyv then
+					levelmetadata_set(roomx, roomy, "enemyv", roomsettings.enemyv)
+					table.insert(undobuffer, {undotype = "levelmetadata", rx = roomx, ry = roomy, changedmetadata = {
+								{
+									key = "enemyv",
+									oldvalue = oldenemyv,
+									newvalue = levelmetadata_get(roomx, roomy).enemyv
+								}
+							},
+							switchtool = 8
+						}
+					)
+					finish_undo("ENEMYV (slider)")
+				end
+]],
+			ignore_error = false,
+			luapattern = false,
+			allowmultiple = false
 		}
 	},
 	["func"] =
@@ -196,6 +231,33 @@ level_template = level_template:gsub("</Data>", "    <EntityColours>$ENTITYCOLOR
 				else
 					allentities[entityid][k] = tonumber(v)
 				end]],
+			ignore_error = false,
+			luapattern = false,
+			allowmultiple = false,
+		},
+		{
+			find = [[.. "\" enemytype=\"" .. v.enemytype]],
+			replace = [[
+			.. (v.enemyv == 0 and "" or "\" enemyv=\"" .. v.enemyv)
+			.. "\" enemytype=\"" .. v.enemytype]],
+			ignore_error = false,
+			luapattern = false,
+			allowmultiple = false,
+		},
+		{
+			find = [[enemytype = 0,]],
+			replace = [[enemytype = 0, enemyv = 0,]],
+			ignore_error = false,
+			luapattern = false,
+			allowmultiple = true,
+		},
+		{
+			find = [[-- Now we only need the room name...]],
+			replace = [[-- Now we only need the room name...
+if (not theselevelmetadata[ry][rx].enemyv) then
+	theselevelmetadata[ry][rx].enemyv = 0
+end
+]],
 			ignore_error = false,
 			luapattern = false,
 			allowmultiple = false,
